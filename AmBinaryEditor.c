@@ -579,16 +579,20 @@ static int AddAttribute(PARSER *ap, char *tag_name, uint32_t deep, uint32_t attr
     }
     else
     {
-        while(1)
-        {
-            if (list->next == NULL)
-            {
-                break;
-            }
-            list = list->next;
-        }
-        list->next = attr;
-        attr->prev = list;
+		attr->next = list;
+		list->prev = attr;
+		target->start_tag_chunk->attr = attr;
+
+        // while(1)
+        // {
+        //     if (list->next == NULL)
+        //     {
+        //         break;
+        //     }
+        //     list = list->next;
+        // }
+        // list->next = attr;
+        // attr->prev = list;
     }
     target->chunk_size += 5 * sizeof(uint32_t);
     target->start_tag_chunk->attr_count += 1;
